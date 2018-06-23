@@ -1,0 +1,60 @@
+| exp NOT_OP {
+	
+	//register containing result of fact()
+	fc = gen_load_immediate(program, 1);
+
+	//vl = register containing the expression to be acted upon
+	vl = getNewRegister(program);
+
+	// check expression type
+	if ($1.expression_type == IMMEDIATE){
+		gen_addi_instruction(program, vl, $1.value)
+	} else {
+		gen_add_instruction(program, vl, REG_0, $1.value)
+	}
+
+	
+
+	
+
+	lbl = reserveLabel(program)
+	fixLabel(program, lbl)
+
+	//fc = fc * vl;
+	gen_mul_instruction(program, fc, fc, vl)
+
+	//vl = vl - 1
+	gen_subi_instruction(program, vl, vl, 1)
+
+	gen_bne_instruction(program, lbl, 0)
+
+	$$ = create_expression(fc, REGISTER)
+}
+
+
+| OR_OP exp OR_OP {
+
+	input = getNewRegister(program)
+	temp = getNewRegister(program)
+	lbl = reserveLabel(program)
+
+
+	if($2.expression_type == IMMEDIATE){
+		gen_load_immediate(program, input, $2.value)
+		gen_load_immediate(program, temp, $2.value)
+
+	} else {
+		gen_add_instruction(program, input, REG_0, $2.value)
+		gen_add_instruction(program, temp, REG_0, $2.value)
+	}
+
+	gen_mul_instruction(program, temp, input, -1)
+	gen_bnl_instruction(program, lbl, 0)
+	gen_mul_instruction(program, input, input, -1)
+
+	fixLabel(program, lbl)
+	$$ = create_expression(input, REGISTER)
+
+}
+
+

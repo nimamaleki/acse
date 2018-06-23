@@ -1,0 +1,34 @@
+| RED LPAR IDENTIFIER RPAR {
+	
+	if(! $3.isArray )
+		exit(-1);
+
+	int len = getNewRegister(program);
+	int sum = getNewRegister(program);
+	int index = getNewRegister(program);
+	int temp = getNewRegister(program);
+	int current = 0;
+	gen_load_immediate(program, len, $3.arrayLength); //or whatever it is
+	gen_load_immediate(program, sum, 0);
+	gen_load_immediate(program, index, 0);
+
+	//jump label
+	lbl = assignNewLabel(program)
+
+	//load current element
+	current = loadArrayElement(program, $3, index);
+
+	//increase index
+	gen_addi_instruction(program, index, 1);
+
+	//sum up
+	gen_add_instruction(program, sum, sum, current);
+
+	
+	//evaluate and branch
+	gen_sub_instruction(program, temp, len, index);
+	gen_bpl_instruction(program, lbl ,0);
+
+	$$ = create_expression(program, sum, REGISTER);
+
+}
