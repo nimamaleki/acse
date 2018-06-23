@@ -10,7 +10,6 @@
 #include "axe_expressions.h"
 #include "axe_gencode.h"
 #include "axe_errors.h"
-#include "axe_utils.h"
 
 
 static t_axe_expression handle_bin_numeric_op_Imm
@@ -19,9 +18,6 @@ static t_axe_expression handle_bin_numeric_op_Imm
 static t_axe_expression handle_bin_comparison_Imm
          (int val1, int val2, int condition);
 
-
-static t_axe_expression normalize(t_program_infos *program,
-                                  t_axe_expression exp);
 
 t_axe_expression handle_bin_numeric_op (t_program_infos *program
          , t_axe_expression exp1, t_axe_expression exp2, int binop)
@@ -39,9 +35,6 @@ t_axe_expression handle_bin_numeric_op (t_program_infos *program
    {
       return handle_bin_numeric_op_Imm(exp1.value, exp2.value, binop);
    }
-
-   exp1 = normalize(program, exp1);
-   exp2 = normalize(program, exp2);
    
    /* at first we have to ask for a free register
    * where to store the result of the operation. */
@@ -169,7 +162,7 @@ t_axe_expression handle_bin_numeric_op (t_program_infos *program
          case SHL :  gen_shl_instruction (program, output_register
                               , exp1.value, exp2.value, CG_DIRECT_ALL);
                      break;
-         case SHR :  gen_shr_instruction (program, output_register
+         case SHR :  gen_shl_instruction (program, output_register
                               , exp1.value, exp2.value, CG_DIRECT_ALL);
                      break;
          default :
@@ -223,16 +216,6 @@ t_axe_expression handle_bin_comparison_Imm
    return create_expression (0, INVALID_EXPRESSION);
 }
 
-t_axe_expression normalize(t_program_infos *program, t_axe_expression exp)
-{
-   if (exp.expression_type ==  IMMEDIATE && !is_int16(exp.value))
-   {
-      int tmp_reg = gen_load_immediate(program, exp.value);
-      return create_expression(tmp_reg, REGISTER);
-   }
-   return exp;
-}
-
 t_axe_expression handle_binary_comparison (t_program_infos *program
          , t_axe_expression exp1, t_axe_expression exp2, int condition)
 {
@@ -250,9 +233,6 @@ t_axe_expression handle_binary_comparison (t_program_infos *program
       return handle_bin_comparison_Imm
                   (exp1.value, exp2.value, condition);
    }
-
-   exp1 = normalize(program, exp1);
-   exp2 = normalize(program, exp2);
                      
    /* at first we have to ask for a free register
    * where to store the result of the comparison. */

@@ -9,7 +9,7 @@
 
 #include <assert.h>
 #include <string.h>
-#include <stdlib.h>
+/*#include <malloc.h>*/
 #include "axe_engine.h"
 #include "symbol_table.h"
 #include "axe_errors.h"

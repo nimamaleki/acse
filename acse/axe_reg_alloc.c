@@ -516,7 +516,7 @@ t_list *updateVarInterval( int id, int counter, t_list *intervals )
     t_live_interval pattern;
 
     if (id == RA_EXCLUDED_VARIABLE)
-        return;
+        return 1;
     
     pattern.varID = id;
     /* search for the current live interval */

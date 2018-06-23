@@ -41,9 +41,6 @@ extern int get_symbol_location(t_program_infos *program
  * It returns the new register identifier or REG_INVALID if an error occurs */
 extern int gen_load_immediate(t_program_infos *program, int immediate);
 
-/* Generate the instruction to move an `immediate' value into a register. */
-extern void gen_move_immediate(t_program_infos *program, int dest, int imm);
-
 /* Notify the end of the program. This function is directly called
  * from the parser when the parsing process is ended */
 extern void set_end_Program(t_program_infos *program);
@@ -60,11 +57,5 @@ extern void shutdownCompiler();
  * is typically automatically called at the beginning of the main
  * and should NEVER be called from the user code */
 extern void init_compiler(int argc, char **argv);
-
-/* Check whether an immediate is representable as a 16-bit signed integer. */
-extern int is_int16(int immediate);
-
-/* Check whether an immediate is representable as a 20-bit signed integer. */
-extern int is_int20(int immediate);
 
 #endif

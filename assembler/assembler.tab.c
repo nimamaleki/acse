@@ -125,6 +125,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "asm_struct.h"
 #include "asm_engine.h"
 
@@ -160,7 +161,7 @@ char * AsmErrorToString(int errorcode);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 30 "assembler.y"
+#line 31 "assembler.y"
 {
 	char *svalue;
 	int immediate;
@@ -172,7 +173,7 @@ typedef union YYSTYPE
    t_asm_register *reg;
 }
 /* Line 193 of yacc.c.  */
-#line 176 "assembler.tab.c"
+#line 177 "assembler.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -185,7 +186,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 189 "assembler.tab.c"
+#line 190 "assembler.tab.c"
 
 #ifdef short
 # undef short
@@ -480,10 +481,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    74,    74,    75,    76,    79,    80,    83,    84,    88,
-      89,    95,   133,   173,   211,   235,   259,   285,   286,   287,
-     290,   304,   317,   360,   374,   390,   404,   420,   421,   424,
-     472,   485
+       0,    75,    75,    76,    77,    80,    81,    84,    85,    89,
+      90,    96,   134,   174,   212,   236,   260,   286,   287,   288,
+     291,   305,   318,   361,   375,   391,   405,   421,   422,   425,
+     473,   486
 };
 #endif
 
@@ -1425,37 +1426,37 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 74 "assembler.y"
-    { /* DOES NOTHING */;}
-    break;
-
-  case 3:
 #line 75 "assembler.y"
     { /* DOES NOTHING */;}
     break;
 
-  case 4:
+  case 3:
 #line 76 "assembler.y"
     { /* DOES NOTHING */;}
     break;
 
-  case 5:
-#line 79 "assembler.y"
-    { line_num++; ;}
+  case 4:
+#line 77 "assembler.y"
+    { /* DOES NOTHING */;}
     break;
 
-  case 6:
+  case 5:
 #line 80 "assembler.y"
     { line_num++; ;}
     break;
 
+  case 6:
+#line 81 "assembler.y"
+    { line_num++; ;}
+    break;
+
   case 7:
-#line 83 "assembler.y"
+#line 84 "assembler.y"
     { /* DOES NOTHING */;}
     break;
 
   case 8:
-#line 84 "assembler.y"
+#line 85 "assembler.y"
     {
                /* assign the label to the current instruction */
                (yyvsp[(1) - (3)].label)->data = (void *) (yyvsp[(2) - (3)].instr);
@@ -1463,12 +1464,12 @@ yyreduce:
     break;
 
   case 9:
-#line 88 "assembler.y"
+#line 89 "assembler.y"
     { /* DOES NOTHING */;}
     break;
 
   case 10:
-#line 89 "assembler.y"
+#line 90 "assembler.y"
     {
                /* assign the label to the current instruction */
                (yyvsp[(1) - (2)].label)->data = (void *) (yyvsp[(2) - (2)].instr);
@@ -1476,7 +1477,7 @@ yyreduce:
     break;
 
   case 11:
-#line 95 "assembler.y"
+#line 96 "assembler.y"
     {
          t_asm_register *reg;
          int asm_errorcode;
@@ -1518,7 +1519,7 @@ yyreduce:
     break;
 
   case 12:
-#line 133 "assembler.y"
+#line 134 "assembler.y"
     {
          t_asm_register *register_1;
          t_asm_register *register_2;
@@ -1562,7 +1563,7 @@ yyreduce:
     break;
 
   case 13:
-#line 173 "assembler.y"
+#line 174 "assembler.y"
     {
          t_asm_register *reg;
          int asm_errorcode;
@@ -1604,7 +1605,7 @@ yyreduce:
     break;
 
   case 14:
-#line 211 "assembler.y"
+#line 212 "assembler.y"
     {
          int asm_errorcode;
          
@@ -1632,7 +1633,7 @@ yyreduce:
     break;
 
   case 15:
-#line 235 "assembler.y"
+#line 236 "assembler.y"
     {
          int asm_errorcode;
          
@@ -1660,7 +1661,7 @@ yyreduce:
     break;
 
   case 16:
-#line 259 "assembler.y"
+#line 260 "assembler.y"
     {
          int asm_errorcode;
          
@@ -1688,22 +1689,22 @@ yyreduce:
     break;
 
   case 17:
-#line 285 "assembler.y"
-    { line_num++; ;}
-    break;
-
-  case 18:
 #line 286 "assembler.y"
     { line_num++; ;}
     break;
 
-  case 19:
+  case 18:
 #line 287 "assembler.y"
     { line_num++; ;}
     break;
 
+  case 19:
+#line 288 "assembler.y"
+    { line_num++; ;}
+    break;
+
   case 20:
-#line 290 "assembler.y"
+#line 291 "assembler.y"
     {
                   int asm_errorcode;
 
@@ -1721,7 +1722,7 @@ yyreduce:
     break;
 
   case 21:
-#line 304 "assembler.y"
+#line 305 "assembler.y"
     {
                   int asm_errorcode;
 
@@ -1736,7 +1737,7 @@ yyreduce:
     break;
 
   case 22:
-#line 317 "assembler.y"
+#line 318 "assembler.y"
     {
             int asm_errorcode;
             
@@ -1781,7 +1782,7 @@ yyreduce:
     break;
 
   case 23:
-#line 360 "assembler.y"
+#line 361 "assembler.y"
     {
                /* create an instance of `t_asm_data' */
                (yyval.dataVal) = allocData(ASM_WORD, (yyvsp[(2) - (2)].immediate));
@@ -1799,7 +1800,7 @@ yyreduce:
     break;
 
   case 24:
-#line 374 "assembler.y"
+#line 375 "assembler.y"
     {
                /* create an instance of `t_asm_data' */
                (yyval.dataVal) = allocData(ASM_SPACE, (yyvsp[(2) - (2)].immediate));
@@ -1817,7 +1818,7 @@ yyreduce:
     break;
 
   case 25:
-#line 390 "assembler.y"
+#line 391 "assembler.y"
     {
                /* alloc memory for a register info. */
                (yyval.reg) = allocRegister((yyvsp[(1) - (1)].immediate), 0);
@@ -1835,7 +1836,7 @@ yyreduce:
     break;
 
   case 26:
-#line 404 "assembler.y"
+#line 405 "assembler.y"
     {
                /* alloc memory for a register info. */
                (yyval.reg) = allocRegister((yyvsp[(2) - (3)].immediate), 1);
@@ -1853,17 +1854,17 @@ yyreduce:
     break;
 
   case 27:
-#line 420 "assembler.y"
+#line 421 "assembler.y"
     { (yyval.immediate) = (yyvsp[(2) - (2)].immediate); ;}
     break;
 
   case 28:
-#line 421 "assembler.y"
+#line 422 "assembler.y"
     {(yyval.immediate) = - (yyvsp[(3) - (3)].immediate); ;}
     break;
 
   case 29:
-#line 424 "assembler.y"
+#line 425 "assembler.y"
     {
             int asm_errorcode;
             t_asm_label *label_found;
@@ -1915,7 +1916,7 @@ yyreduce:
     break;
 
   case 30:
-#line 472 "assembler.y"
+#line 473 "assembler.y"
     {
             (yyval.address) = allocAddress((yyvsp[(1) - (1)].immediate), NULL);
             if ((yyval.address) == NULL)
@@ -1930,13 +1931,13 @@ yyreduce:
     break;
 
   case 31:
-#line 485 "assembler.y"
+#line 486 "assembler.y"
     { (yyval.svalue) = (yyvsp[(2) - (3)].svalue); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1940 "assembler.tab.c"
+#line 1941 "assembler.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2150,7 +2151,7 @@ yyreturn:
 }
 
 
-#line 489 "assembler.y"
+#line 490 "assembler.y"
 
 		 
 int yyerror(const char* errmsg)

@@ -38,7 +38,7 @@ t_asm_address * allocAddress(int displacement, t_asm_label *label)
       return NULL;
    
 	/* set the fields of the instance of `t_asm_address' */
-	if (label == NULL)
+	if (label != NULL)
 		result->addr = displacement;
 	else
 		result->addr = 0;

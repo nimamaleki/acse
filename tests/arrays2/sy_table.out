@@ -1,0 +1,13 @@
+--------------------------------
+          SYMBOL TABLE
+--------------------------------
+NUMBER OF SYMBOLS : 7 
+--------------------------------
+
+ID : a	;; TYPE : INTEGER	;; LOCATION : R1 
+ID : b	;; TYPE : INTEGER	;; LOCATION : R2 
+ID : c	;; TYPE : INTEGER	;; LOCATION : [UNSPECIFIED] 
+ID : d	;; TYPE : INTEGER	;; LOCATION : [UNSPECIFIED] 
+ID : e	;; TYPE : INTEGER	;; LOCATION : R3 
+ID : f	;; TYPE : INTEGER	;; LOCATION : R4 
+ID : g	;; TYPE : INTEGER	;; LOCATION : R5 

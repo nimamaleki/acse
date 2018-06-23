@@ -17,6 +17,7 @@
 #include <stdio.h>       
 #include <stdlib.h>
 #include <assert.h>
+/*#include <malloc.h>*/
 #include "axe_struct.h"
 #include "axe_engine.h"
 #include "symbol_table.h"
@@ -294,7 +295,8 @@ assign_statement : IDENTIFIER LSQUARE exp RSQUARE ASSIGN exp
 
                /* update the value of location */
                if ($3.expression_type == IMMEDIATE)
-                  gen_move_immediate(program, location, $3.value);
+                  instr = gen_addi_instruction
+                     (program, location, REG_0, $3.value);
                else
                   instr = gen_add_instruction
                         (program, location, REG_0, $3.value, CG_DIRECT_ALL);

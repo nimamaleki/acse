@@ -1,0 +1,10 @@
+--------------------------------
+          SYMBOL TABLE
+--------------------------------
+NUMBER OF SYMBOLS : 4 
+--------------------------------
+
+ID : value	;; TYPE : INTEGER	;; LOCATION : R1 
+ID : result	;; TYPE : INTEGER	;; LOCATION : R2 
+ID : power	;; TYPE : INTEGER	;; LOCATION : R3 
+ID : negative	;; TYPE : INTEGER	;; LOCATION : R4 

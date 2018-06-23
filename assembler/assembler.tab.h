@@ -86,7 +86,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 30 "assembler.y"
+#line 31 "assembler.y"
 {
 	char *svalue;
 	int immediate;

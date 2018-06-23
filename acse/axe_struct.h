@@ -10,7 +10,7 @@
 #ifndef _AXE_STRUCT_H
 #define _AXE_STRUCT_H
 
-#include <stdlib.h>
+/*#include <malloc.h>*/
 #include <stdio.h>
 #include <assert.h>
 #include "axe_constants.h"

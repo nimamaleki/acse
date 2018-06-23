@@ -1,0 +1,8 @@
+--------------------------------
+          SYMBOL TABLE
+--------------------------------
+NUMBER OF SYMBOLS : 2 
+--------------------------------
+
+ID : value	;; TYPE : INTEGER	;; LOCATION : R1 
+ID : counter	;; TYPE : INTEGER	;; LOCATION : R2 

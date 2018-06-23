@@ -190,21 +190,15 @@ t_axe_instruction * gen_div_instruction (t_program_infos *program
 t_axe_instruction * gen_shl_instruction (t_program_infos *program
       , int r_dest, int r_source1, int r_source2, int flags)
 {
-   /* The SHL operational semantic is: source2 << source1. Because of this we
-   * need to put the value to shift in source2, and the shift-amount in source1
-   */
    return gen_ternary_instruction
-         (program, SHL, r_dest, r_source2, r_source1, flags);
+         (program, SHL, r_dest, r_source1, r_source2, flags);
 }
 
 t_axe_instruction * gen_shr_instruction (t_program_infos *program
       , int r_dest, int r_source1, int r_source2, int flags)
 {
-   /* The SHR operational semantic is: source2 >> source1. Because of this we
-   * need to put the value to shift in source2, and the shift-amount in source1
-   */
    return gen_ternary_instruction
-         (program, SHR, r_dest, r_source2, r_source1, flags);
+         (program, SHL, r_dest, r_source1, r_source2, flags);
 }
 
 t_axe_instruction * gen_neg_instruction (t_program_infos *program

@@ -172,37 +172,14 @@ int get_symbol_location(t_program_infos *program, char *ID, int genLoad)
    return location;
 }
 
-int is_int16(int immediate) {
-  return immediate < (1 << 15) && immediate >= -(1 << 15);
-}
-
-int is_int20(int immediate) {
-  return immediate < (1 << 19) && immediate >= -(1 << 19);
-}
-
-void gen_move_immediate(t_program_infos *program, int dest, int immediate)
-{
-   if (is_int20(immediate)) {
-     /* immediate fits in a a 20-bit signed integer */
-     gen_mova_instruction(program, dest, NULL, immediate);
-   } else {
-     /* immediate does not fit in a 20-bit signed integer */
-     int lo = (immediate << 16) >> 16;
-     int hi = (immediate - lo) >> 16;
-
-     gen_addi_instruction(program, dest, REG_0, hi);
-     gen_shli_instruction(program, dest, dest, 16);
-     gen_addi_instruction(program, dest, dest, lo);
-   }
-}
-
 int gen_load_immediate(t_program_infos *program, int immediate)
 {
    int imm_register;
 
    imm_register = getNewRegister(program);
 
-   gen_move_immediate(program, imm_register, immediate);
+   /* load the immediate into a register */
+   gen_addi_instruction(program, imm_register, REG_0, immediate);
 
    return imm_register;
 }

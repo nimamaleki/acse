@@ -439,7 +439,7 @@ extern t_axe_instruction * gen_bcc_instruction
 /* create a "branch on carry clear" instruction. If the bit `C' of the
  * status register is set, then the branch is taken. */
 extern t_axe_instruction * gen_bcs_instruction
-      (t_program_infos *program, t_axe_label *label, int addr);gen_bpl_instruction
+      (t_program_infos *program, t_axe_label *label, int addr);
 
 /* create a "branch on not equal" instruction. If the bit `Z' of the
  * status register is not set, then the branch is taken. */
