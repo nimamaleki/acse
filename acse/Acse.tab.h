@@ -78,7 +78,8 @@
      TYPE = 294,
      IDENTIFIER = 295,
      NUMBER = 296,
-     NOT = 297
+     EXISTS = 297,
+     NOT = 298
    };
 #endif
 /* Tokens.  */
@@ -121,14 +122,15 @@
 #define TYPE 294
 #define IDENTIFIER 295
 #define NUMBER 296
-#define NOT 297
+#define EXISTS 297
+#define NOT 298
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 101 "Acse.y"
+#line 109 "Acse.y"
 {            
    int intval;
    char *svalue;
@@ -139,7 +141,7 @@ typedef union YYSTYPE
    t_while_statement while_stmt;
 }
 /* Line 1529 of yacc.c.  */
-#line 143 "Acse.tab.h"
+#line 145 "Acse.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

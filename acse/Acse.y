@@ -90,6 +90,14 @@ t_reg_allocator *RA;       /* Register allocator. It implements the "Linear scan
 
 t_io_infos *file_infos;    /* input and output files used by the compiler */
 
+struct t_exists{
+ char* id;
+   int index_reg;
+   int array_size;
+} exists = {NULL, 0, 0};
+
+
+
 %}
 
 %expect 1
@@ -130,6 +138,7 @@ t_io_infos *file_infos;    /* input and output files used by the compiler */
 %token <intval> TYPE
 %token <svalue> IDENTIFIER
 %token <intval> NUMBER
+%token <label> EXISTS
 
 %type <expr> exp
 %type <decl> declaration
@@ -459,7 +468,13 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
                      int location;
    
                      /* get the location of the symbol with the given ID */
-                     location = get_symbol_location(program, $1, 0);
+                     /* instead of location = get_symbol_location(program, $1, 0); */
+
+                     if (strcmp(exists.id, $1)){
+                       location = get_symbol_location(program, $1, 0);
+                     } else {
+                      location = exists.index_reg;
+                     }
                      
                      /* return the register location of IDENTIFIER as
                       * a value for `exp' */
@@ -470,7 +485,16 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
    }
    | IDENTIFIER LSQUARE exp RSQUARE {
                      int reg;
+
+                     /* new */
+                     t_axe_variable* v = getVariable(program, $1);
                      
+                     if (exists.id != NULL){
+                       exists.array_size = v->arraySize;
+                     }
+
+                    /* end */
+
                      /* load the value IDENTIFIER[exp]
                       * into `arrayElement' */
                      reg = loadArrayElement(program, $1, $3);
@@ -481,6 +505,44 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
                      /* free the memory associated with the IDENTIFIER */
                      free($1);
    }
+
+   /* new */
+   | EXISTS IDENTIFIER {
+     if (exists.id != NULL)
+       notifyError(AXE_SYNTAX_ERROR);
+       
+     exists.id = strdup($2);
+     exists.index_reg = gen_load_immediate(program, 0);
+     exists.array_size = 0;
+     $1 = assignNewLabel(program);
+   }
+   LPAR exp RPAR {
+     // Increment the index
+     gen_addi_instruction(program, exists.index_reg, exists.index_reg, 1);
+
+     // Define conditions to stop iteration
+     t_axe_expression is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
+     t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists.index_reg, REGISTER), create_expression(exists.array_size, IMMEDIATE), _LT_);
+
+     handle_bin_numeric_op(program, is_exp_zero, is_visit_not_completed, ANDB);
+     // if (is_exp_zero AND is_visit_not_completed) then jump to $1
+     // else exit
+     gen_bne_instruction(program, $1, 0);
+     
+     // If is_exp_zero==0 then exp is true (hence, exists is satisfied)
+    $$ = handle_binary_comparison(program, is_exp_zero, create_expression(0, IMMEDIATE), _EQ_);
+
+    free(exists.id);
+    exists.id = NULL;
+    exists.index_reg = 0;
+    exists.array_size = 0;
+    free($2);
+   }
+
+   /* end */
+
+
+
    | NOT_OP NUMBER   {  if ($2 == 0)
                            $$ = create_expression (1, IMMEDIATE);
                         else
