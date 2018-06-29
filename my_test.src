@@ -1,0 +1,34 @@
+int a[5];
+int b[6];
+int c[3];
+int x = 3;
+int i,k,l;
+
+
+a[0] = 0;
+a[1] = 1;
+a[2] = 2;
+a[3] = 3;
+a[4] = 4;
+
+b[0] = 0;
+b[1] = 1;
+b[2] = 2;
+b[3] = 3;
+b[4] = 4;
+b[5] = 5;
+
+c[0] = 0;
+c[1] = 1;
+c[2] = 2;
+
+
+if ( exists i,k,l (a[i]>2 & b[k]>2 & c[l]<4) )
+	write(1);
+else
+	write(0);
+
+if ( exists i (a[i]>2))
+	write(1);
+else
+	write(0);

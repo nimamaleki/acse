@@ -1,3 +1,7 @@
+To see the multiple existential quantifier test results and debugging steps, run the script ./run-test.sh
+
+=================================================
+
 To install the ACSE compiler type in the console:
  make
 
