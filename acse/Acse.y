@@ -521,7 +521,7 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
                      if (exists[0].id != NULL){
 
                        fprintf(stdout, "Now storing the array length for array %d in the current scope.\n", quantifier_cursor);
-                       exists[quantifier_cursor].array_size = v->arraySize;
+                       exists[quantifier_cursor-1].array_size = v->arraySize;
                        quantifier_cursor++;
 
                      }
@@ -568,24 +568,25 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
    }
    LPAR exp RPAR {
      // iterate the check for all quantifiers 
-     fprintf(stdout, "==== coming up the parsing tree, exists size is %d \n", exists_size);
+     fprintf(stdout, "==== coming up the parsing tree, exists size is %d \n", exists_size-1);
      t_axe_expression is_exp_zero;
 
-     for (int i=1; i<exists_size; i++) {
+     for (int i=0; i<exists_size-1; i++) {
 
-         fprintf(stdout, "size of array %d is %d \n", i, exists[i].array_size);
-
-             // Increment the index
+         fprintf(stdout, "size of array tied to %s is %d \n", exists[i].id, exists[i].array_size);
+         fprintf(stdout, "index reg of array tied to %s is %d \n", exists[i].id, exists[i].index_reg);
+         t_axe_label *loop = assignNewLabel(program);
+         // Increment the index
          gen_addi_instruction(program, exists[i].index_reg, exists[i].index_reg, 1);
 
          // Define conditions to stop iteration
-         t_axe_expression is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
+         is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
          t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists[i].index_reg, REGISTER), create_expression(exists[i].array_size, IMMEDIATE), _LT_);
 
          handle_bin_numeric_op(program, is_exp_zero, is_visit_not_completed, ANDB);
          // if (is_exp_zero AND is_visit_not_completed) then jump to $1
          // else exit
-         gen_bne_instruction(program, $1, 0);
+         gen_bne_instruction(program, loop, 0);
 
      }
 

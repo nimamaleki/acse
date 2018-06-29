@@ -5,6 +5,7 @@ int x = 3;
 int i,k,l;
 
 
+
 a[0] = 0;
 a[1] = 1;
 a[2] = 2;
@@ -24,11 +25,6 @@ c[2] = 2;
 
 
 if ( exists i,k,l (a[i]>2 & b[k]>2 & c[l]<4) )
-	write(1);
-else
-	write(0);
-
-if ( exists i (a[i]>2))
 	write(1);
 else
 	write(0);

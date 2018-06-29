@@ -622,9 +622,9 @@ static const yytype_uint16 yyrline[] =
      227,   236,   245,   258,   259,   263,   264,   269,   270,   271,
      272,   275,   276,   277,   278,   281,   282,   285,   302,   334,
      340,   339,   359,   365,   358,   379,   388,   378,   415,   414,
-     436,   443,   463,   482,   483,   514,   543,   543,   611,   616,
-     638,   641,   644,   647,   650,   653,   656,   659,   662,   665,
-     668,   671,   674,   675,   676,   677,   678,   679
+     436,   443,   463,   482,   483,   514,   543,   543,   612,   617,
+     639,   642,   645,   648,   651,   654,   657,   660,   663,   666,
+     669,   672,   675,   676,   677,   678,   679,   680
 };
 #endif
 
@@ -2123,7 +2123,7 @@ yyreduce:
                      if (exists[0].id != NULL){
 
                        fprintf(stdout, "Now storing the array length for array %d in the current scope.\n", quantifier_cursor);
-                       exists[quantifier_cursor].array_size = v->arraySize;
+                       exists[quantifier_cursor-1].array_size = v->arraySize;
                        quantifier_cursor++;
 
                      }
@@ -2176,26 +2176,27 @@ yyreduce:
 #line 569 "Acse.y"
     {
      // iterate the check for all quantifiers 
-     fprintf(stdout, "==== coming up the parsing tree, exists size is %d \n", exists_size);
+     fprintf(stdout, "==== coming up the parsing tree, exists size is %d \n", exists_size-1);
      t_axe_expression is_exp_zero;
 
-     for (int i=1; i<exists_size; i++) {
+     //for (int i=0; i<exists_size-1; i++) {
 
-         fprintf(stdout, "size of array %d is %d \n", i, exists[i].array_size);
-
-             // Increment the index
-         gen_addi_instruction(program, exists[i].index_reg, exists[i].index_reg, 1);
+         //fprintf(stdout, "size of array tied to %s is %d \n", exists[i].id, exists[i].array_size);
+         //fprintf(stdout, "index reg of array tied to %s is %d \n", exists[i].id, exists[i].index_reg);
+         t_axe_label *loop = assignNewLabel(program);
+         // Increment the index
+         gen_addi_instruction(program, exists[0].index_reg, exists[0].index_reg, 1);
 
          // Define conditions to stop iteration
-         t_axe_expression is_exp_zero = handle_binary_comparison (program, (yyvsp[(5) - (6)].expr), create_expression(0, IMMEDIATE), _EQ_);
-         t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists[i].index_reg, REGISTER), create_expression(exists[i].array_size, IMMEDIATE), _LT_);
+         is_exp_zero = handle_binary_comparison (program, (yyvsp[(5) - (6)].expr), create_expression(0, IMMEDIATE), _EQ_);
+         t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists[0].index_reg, REGISTER), create_expression(exists[0].array_size, IMMEDIATE), _LT_);
 
          handle_bin_numeric_op(program, is_exp_zero, is_visit_not_completed, ANDB);
          // if (is_exp_zero AND is_visit_not_completed) then jump to $1
          // else exit
-         gen_bne_instruction(program, (yyvsp[(1) - (6)].label), 0);
+         gen_bne_instruction(program, loop, 0);
 
-     }
+     //}
 
      // If is_exp_zero==0 then exp is true (hence, exists is satisfied)
     (yyval.expr) = handle_binary_comparison(program, is_exp_zero, create_expression(0, IMMEDIATE), _EQ_);
@@ -2214,7 +2215,7 @@ yyreduce:
     break;
 
   case 48:
-#line 611 "Acse.y"
+#line 612 "Acse.y"
     {  if ((yyvsp[(2) - (2)].intval) == 0)
                            (yyval.expr) = create_expression (1, IMMEDIATE);
                         else
@@ -2223,7 +2224,7 @@ yyreduce:
     break;
 
   case 49:
-#line 616 "Acse.y"
+#line 617 "Acse.y"
     {
                            int identifier_location;
                            int output_register;
@@ -2249,116 +2250,116 @@ yyreduce:
     break;
 
   case 50:
-#line 638 "Acse.y"
+#line 639 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ANDB);
    ;}
     break;
 
   case 51:
-#line 641 "Acse.y"
+#line 642 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ORB);
    ;}
     break;
 
   case 52:
-#line 644 "Acse.y"
+#line 645 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ADD);
    ;}
     break;
 
   case 53:
-#line 647 "Acse.y"
+#line 648 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SUB);
    ;}
     break;
 
   case 54:
-#line 650 "Acse.y"
+#line 651 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), MUL);
    ;}
     break;
 
   case 55:
-#line 653 "Acse.y"
+#line 654 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), DIV);
    ;}
     break;
 
   case 56:
-#line 656 "Acse.y"
+#line 657 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _LT_);
    ;}
     break;
 
   case 57:
-#line 659 "Acse.y"
+#line 660 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _GT_);
    ;}
     break;
 
   case 58:
-#line 662 "Acse.y"
+#line 663 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _EQ_);
    ;}
     break;
 
   case 59:
-#line 665 "Acse.y"
+#line 666 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _NOTEQ_);
    ;}
     break;
 
   case 60:
-#line 668 "Acse.y"
+#line 669 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _LTEQ_);
    ;}
     break;
 
   case 61:
-#line 671 "Acse.y"
+#line 672 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _GTEQ_);
    ;}
     break;
 
   case 62:
-#line 674 "Acse.y"
+#line 675 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SHL); ;}
     break;
 
   case 63:
-#line 675 "Acse.y"
+#line 676 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SHR); ;}
     break;
 
   case 64:
-#line 676 "Acse.y"
+#line 677 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ANDL); ;}
     break;
 
   case 65:
-#line 677 "Acse.y"
+#line 678 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ORL); ;}
     break;
 
   case 66:
-#line 678 "Acse.y"
+#line 679 "Acse.y"
     { (yyval.expr) = (yyvsp[(2) - (3)].expr); ;}
     break;
 
   case 67:
-#line 679 "Acse.y"
+#line 680 "Acse.y"
     {
                         if ((yyvsp[(2) - (2)].expr).expression_type == IMMEDIATE)
                         {
@@ -2381,7 +2382,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2385 "Acse.tab.c"
+#line 2386 "Acse.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2595,7 +2596,7 @@ yyreturn:
 }
 
 
-#line 699 "Acse.y"
+#line 700 "Acse.y"
 
 /*=========================================================================
                                   MAIN
