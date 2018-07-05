@@ -94,13 +94,14 @@ struct t_exists{
  char* id;
    int index_reg;
    int array_size;
-} exists[5] = {NULL, 0, 0};
+} exists[2] = {NULL, 0, 0};
+
 
 int exists_size = 1;
 int quantifier_cursor = 1;
-t_axe_label *comb_labels[5];
-
-//simplifying assumption: we can see at most 5 existential quantifiers in one scope
+t_axe_label *comb_labels[3];
+t_axe_label * comb_labels1;
+t_axe_label * comb_labels2;
 
 
 %}
@@ -491,30 +492,36 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
 
 
                      fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
-
+          
                       for (int i=0; i<exists_size-1; i++) {
 
                         fprintf(stdout, "quantifier %s is being compared to variable %s \n", exists[i].id, $1);
 
                          if (strcmp(exists[i].id, $1)){
-                            location = get_symbol_location(program, $1, 0);
+                           printf(stdout, "taking the original value");
+                           location = get_symbol_location(program, $1, 0);
                          } else {
-                            location = exists[i].index_reg;
-                            fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
+                          fprintf(stdout, "quantifier %s WANTS to override the variable %s value \n", exists[i].id, $1 );
+                          location = exists[i].index_reg;
+                          fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
                           break;
                          }
 
                       }
                      
                      fprintf(stdout, "returned register location is %d \n", location);
-
+                     /* return the register location of IDENTIFIER as
+                      * a value for `exp' */
                      $$ = create_expression (location, REGISTER);
 
+                     /* free the memory associated with the IDENTIFIER */
                      free($1);
    }
    | IDENTIFIER LSQUARE exp RSQUARE {
 
                      int reg;
+
+                     /* new */
 
                      t_axe_variable* v = getVariable(program, $1);
                      
@@ -526,10 +533,16 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
 
                      }
 
+                    /* end */
+
+                     /* load the value IDENTIFIER[exp]
+                      * into `arrayElement' */
                      reg = loadArrayElement(program, $1, $3);
 
+                     /* create a new expression */
                      $$ = create_expression (reg, REGISTER);
 
+                     /* free the memory associated with the IDENTIFIER */
                      free($1);
    }
 
@@ -539,9 +552,8 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
      int q_list_len = getLength($2);
      t_list *q_list_last = getLastElement($2);
      fprintf(stdout, "identifier list size is %d \n", q_list_len);
+     //fprintf(stdout, "the last variable is: %s \n", strdup(q_list_last->data));
 
-     //using the first element of exist array as an indicator of wetherr
-     //or not we are allowed to see another exist structure
      if (exists[0].id != NULL)
        notifyError(AXE_SYNTAX_ERROR);
 
@@ -550,60 +562,111 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
        t_list *q_list_current = getElementAt($2,i);
        exists[i].id = strdup(q_list_current->data);
        exists[i].index_reg = gen_load_immediate(program, -1);
-       exists[i].array_size = 0;       
- 
+       exists[i].array_size = 0;
+       printf("index register: %d\n", exists[i].index_reg);
+       
+      // fprintf(stdout, "doing it %s \n", exists[i].id);
      }  
+
+     
+
+     // exists[0].id = strdup($2);
+     // exists[0].index_reg = gen_load_immediate(program, 0);
+     // exists[0].array_size = 0;
+     //$1 = assignNewLabel(program);
 
      // structure for holding combination indexes
      //t_axe_label *comb_labels[q_list_len]; defined earlier
-     for (int i=0; i<q_list_len; i++){
-        //as many quantifiers that you have seen, create (1) jump labels and (2) loop index increment instructions
-        comb_labels[i] = assignNewLabel(program);
-        gen_addi_instruction(program, exists[i].index_reg, exists[i].index_reg, 1);
-     }
+
+     // for (int i=0; i<q_list_len; i++){
+     //    comb_labels[i] = assignNewLabel(program);
+     //    gen_addi_instruction(program, exists[i].index_reg, exists[i].index_reg, 1);
+     // }
+     comb_labels1 = assignNewLabel(program);
+     gen_addi_instruction(program, exists[0].index_reg, exists[0].index_reg, 1);
+     comb_labels2 = assignNewLabel(program);
+     gen_addi_instruction(program, exists[1].index_reg, exists[1].index_reg, 1);
+
 
    }
    LPAR exp RPAR {
 
-      //label to jump back to until satisfaction or exaustion of all combinations
       $1 = newLabel(program);
-
-      fprintf(stdout, "====== coming up the parsing tree, exists size is %d ======\n", exists_size-1);
+      //t_axe_label *sucsses = newLabel(program);
+      // iterate the check for all quantifiers 
+      fprintf(stdout, "==== coming up the parsing tree, exists size is %d \n", exists_size-1);
       
-      //evaluate the expression
-      //if it was true, we have already shown that exists is satisfied:
-      //therefore we can jump out and report the result
+      //printf("here \n");
+      //now evaluate the expression
+      //if is_exp_zero == 0,
       t_axe_expression is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
       gen_beq_instruction(program, $1, 0);
-      //otherwise:
 
-      //for each quantifier, check if it's visit is completed.
-      //if not, jump up to the block before the expression and increase it by 1. 
+      //for each quantifier, check if it's visit is completed. if not, jump up in increase it by 1. 
       //otherwise reset it's value to zero. Except for the last quantifier
-      for(int i=exists_size-2; i>=0; i--){
-        printf("iteration: %d\n", i);
-        handle_binary_comparison (program, create_expression(exists[i].index_reg, REGISTER), create_expression(exists[i].array_size, IMMEDIATE), _LT_);
-        gen_bne_instruction(program, comb_labels[i], 0);
-        if(i!=0)
-            printf("generating the reset %d with register %d \n", i, exists[i].index_reg);
-            gen_addi_instruction(program, exists[i].index_reg, REG_0, -1);
-      }
+      // for(int i=exists_size; i>0; i--){
+      //   handle_binary_comparison (program, create_expression(exists[i].index_reg, REGISTER), create_expression(exists[i].array_size, IMMEDIATE), _LT_);
+      //   gen_beq_instruction(program, comb_labels[i], 0);
+      //   if(i!=1)
+      //       gen_addi_instruction(program, exists[i].index_reg, REG_0, -1);
+      // }
+
+      handle_binary_comparison (program, create_expression(exists[1].index_reg, REGISTER), create_expression(exists[1].array_size, IMMEDIATE), _LT_);
+      gen_bne_instruction(program, comb_labels2, 0);
+      gen_addi_instruction(program, exists[1].index_reg, REG_0, -1);
+      handle_binary_comparison (program, create_expression(exists[0].index_reg, REGISTER), create_expression(exists[0].array_size, IMMEDIATE), _LT_);
+      gen_bne_instruction(program, comb_labels1, 0);
+
+      t_axe_label *failure = assignNewLabel(program);
+
 
       assignLabel(program,$1);
 
       $$ = handle_binary_comparison(program, is_exp_zero, create_expression(0, IMMEDIATE), _EQ_);
+      //$$ = is_exp_zero;
 
-      //reset the exist array's first element and the counters, to allow for a new "exist"
-      free(exists[0].id);
-      exists[0].id = NULL;
-      exists[0].index_reg = 0;
-      exists[0].array_size = 0;
-      free($2);
 
-      exists_size = 1;
-      quantifier_cursor = 1;
+    //  t_axe_expression is_exp_zero;
 
+    //  for (int i=0; i<exists_size-1; i++) {
+
+    //      fprintf(stdout, "size of array tied to %s is %d \n", exists[i].id, exists[i].array_size);
+    //      fprintf(stdout, "index reg of array tied to %s is %d \n", exists[i].id, exists[i].index_reg);
+
+    //      // Increment the index
+    //      gen_addi_instruction(program, exists[i].index_reg, exists[i].index_reg, 1);
+
+    //      // Define conditions to stop iteration
+    //      is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
+    //      t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists[i].index_reg, REGISTER), create_expression(exists[i].array_size, IMMEDIATE), _LT_);
+
+    //      handle_bin_numeric_op(program, is_exp_zero, is_visit_not_completed, ANDB);
+    //      // if (is_exp_zero AND is_visit_not_completed) then jump to $1
+    //      // else exit
+    //      gen_bne_instruction(program, loop, 0);
+
+    //  }
+
+    //  // If is_exp_zero==0 then exp is true (hence, exists is satisfied)
+    // $$ = handle_binary_comparison(program, is_exp_zero, create_expression(0, IMMEDIATE), _EQ_);
+
+    // free(exists[0].id);
+    // exists[0].id = NULL;
+    // exists[0].index_reg = 0;
+    // exists[0].array_size = 0;
+    // free($2);
+
+    // struct t_exists exists[] = {NULL, 0, 0};
+
+    // exists_size = 1;
+    // quantifier_cursor = 1;
+
+    //$$ = create_expression(1,IMMEDIATE);
    }
+
+   /* end */
+
+
 
    | NOT_OP NUMBER   {  if ($2 == 0)
                            $$ = create_expression (1, IMMEDIATE);

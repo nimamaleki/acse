@@ -73,13 +73,14 @@ diff -Naur /Users/nmaleki/Documents/Beep/FLC/SLIDES_PRACTICE_LABORATORY/acse_1.1
 +   	exists.id = strdup($2);
 +   	exists.index_reg = gen_load_immediate(program, 0);
 +   	exists.array_size = 0;
+
 +   	$1 = assignNewLabel(program);
 +   }
 +   LPAR exp RPAR {
 +   	// Increment the index
 +   	gen_addi_instruction(program, exists.index_reg, exists.index_reg, 1);
 +
-+		// Define conditions to stop iteration
++		  // Define conditions to stop iteration
 +   	t_axe_expression is_exp_zero = handle_binary_comparison (program, $5, create_expression(0, IMMEDIATE), _EQ_);
 +   	t_axe_expression is_visit_not_completed = handle_binary_comparison (program, create_expression(exists.index_reg, REGISTER), create_expression(exists.array_size, IMMEDIATE), _LT_);
 +

@@ -2,7 +2,9 @@ int a[5];
 int b[6];
 int c[3];
 int x = 3;
-int i,k,l;
+int i,j,k;
+
+
 
 
 
@@ -23,8 +25,32 @@ c[0] = 0;
 c[1] = 1;
 c[2] = 2;
 
+//true
+if ( exists i (a[i]==0 & b[i]==0) )
+	write(1);
+else
+	write(0);
 
-if ( exists i,k,l (a[i]>2 & b[k]>2 & c[l]<4) )
+//true
+if ( exists i,j (a[i]==2 & b[j]>=3) )
+	write(1);
+else
+	write(0);
+
+//false
+if ( exists i,j (a[i]==6 & b[j]>=3) )
+	write(1);
+else
+	write(0);
+
+//false
+if ( exists i,j,k (a[i]==0 & b[j]>=5 & c[k]==4) )
+	write(1);
+else
+	write(0);
+
+//true
+if ( exists i,j,k (a[i]==0 & b[j]>=5 & c[k]>=1) )
 	write(1);
 else
 	write(0);
