@@ -492,18 +492,20 @@ exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
 
                      fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
 
+                      int override = 0;
+
                       for (int i=0; i<exists_size-1; i++) {
 
                         fprintf(stdout, "quantifier %s is being compared to variable %s \n", exists[i].id, $1);
-
-                         if (strcmp(exists[i].id, $1)){
-                            location = get_symbol_location(program, $1, 0);
-                         } else {
-                            location = exists[i].index_reg;
-                            fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
-                          break;
+                         if (!override){
+                           if (strcmp(exists[i].id, $1)){
+                              location = get_symbol_location(program, $1, 0);
+                           } else {
+                              location = exists[i].index_reg;
+                              fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
+                              override = 1;
+                           }
                          }
-
                       }
                      
                      fprintf(stdout, "returned register location is %d \n", location);

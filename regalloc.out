@@ -4,129 +4,57 @@
 REGISTER ALLOCATION INFOS
 *************************
 AVAILABLE REGISTERS : 31 
-USED VARIABLES : 117 
+USED VARIABLES : 43 
 -------------------------
 LIVE_INTERVALS:
-	LIVE_INTERVAL of T5 : [0, 2] 
-	LIVE_INTERVAL of T6 : [1, 2] 
-	LIVE_INTERVAL of T7 : [3, 6] 
-	LIVE_INTERVAL of T8 : [5, 6] 
-	LIVE_INTERVAL of T9 : [7, 10] 
-	LIVE_INTERVAL of T10 : [9, 10] 
-	LIVE_INTERVAL of T11 : [11, 14] 
-	LIVE_INTERVAL of T12 : [13, 14] 
-	LIVE_INTERVAL of T13 : [15, 18] 
-	LIVE_INTERVAL of T14 : [17, 18] 
-	LIVE_INTERVAL of T15 : [19, 21] 
-	LIVE_INTERVAL of T16 : [20, 21] 
-	LIVE_INTERVAL of T17 : [22, 25] 
-	LIVE_INTERVAL of T18 : [24, 25] 
-	LIVE_INTERVAL of T19 : [26, 29] 
-	LIVE_INTERVAL of T20 : [28, 29] 
-	LIVE_INTERVAL of T21 : [30, 33] 
-	LIVE_INTERVAL of T22 : [32, 33] 
-	LIVE_INTERVAL of T23 : [34, 37] 
-	LIVE_INTERVAL of T24 : [36, 37] 
-	LIVE_INTERVAL of T25 : [38, 41] 
-	LIVE_INTERVAL of T26 : [40, 41] 
-	LIVE_INTERVAL of T27 : [42, 44] 
-	LIVE_INTERVAL of T28 : [43, 44] 
-	LIVE_INTERVAL of T29 : [45, 48] 
-	LIVE_INTERVAL of T30 : [47, 48] 
-	LIVE_INTERVAL of T31 : [49, 52] 
-	LIVE_INTERVAL of T32 : [51, 52] 
-	LIVE_INTERVAL of T33 : [53, 72] 
-	LIVE_INTERVAL of T34 : [55, 57] 
-	LIVE_INTERVAL of T35 : [57, 58] 
-	LIVE_INTERVAL of T36 : [58, 65] 
-	LIVE_INTERVAL of T37 : [60, 62] 
-	LIVE_INTERVAL of T38 : [62, 63] 
-	LIVE_INTERVAL of T39 : [63, 65] 
-	LIVE_INTERVAL of T40 : [65, 66] 
-	LIVE_INTERVAL of T41 : [66, 73] 
-	LIVE_INTERVAL of T42 : [69, 70] 
-	LIVE_INTERVAL of T43 : [73, 75] 
-	LIVE_INTERVAL of T44 : [77, 78] 
-	LIVE_INTERVAL of T45 : [80, 81] 
-	LIVE_INTERVAL of T46 : [82, 107] 
-	LIVE_INTERVAL of T47 : [83, 106] 
-	LIVE_INTERVAL of T48 : [86, 88] 
-	LIVE_INTERVAL of T49 : [88, 89] 
-	LIVE_INTERVAL of T50 : [89, 96] 
-	LIVE_INTERVAL of T51 : [91, 93] 
-	LIVE_INTERVAL of T52 : [93, 94] 
-	LIVE_INTERVAL of T53 : [94, 96] 
-	LIVE_INTERVAL of T54 : [96, 97] 
-	LIVE_INTERVAL of T55 : [97, 108] 
-	LIVE_INTERVAL of T56 : [100, 101] 
-	LIVE_INTERVAL of T57 : [104, 105] 
-	LIVE_INTERVAL of T58 : [108, 110] 
-	LIVE_INTERVAL of T59 : [112, 113] 
-	LIVE_INTERVAL of T60 : [115, 116] 
-	LIVE_INTERVAL of T61 : [117, 142] 
-	LIVE_INTERVAL of T62 : [118, 141] 
-	LIVE_INTERVAL of T63 : [121, 123] 
-	LIVE_INTERVAL of T64 : [123, 124] 
-	LIVE_INTERVAL of T65 : [124, 131] 
-	LIVE_INTERVAL of T66 : [126, 128] 
-	LIVE_INTERVAL of T67 : [128, 129] 
-	LIVE_INTERVAL of T68 : [129, 131] 
-	LIVE_INTERVAL of T69 : [131, 132] 
-	LIVE_INTERVAL of T70 : [132, 143] 
-	LIVE_INTERVAL of T71 : [135, 136] 
-	LIVE_INTERVAL of T72 : [139, 140] 
-	LIVE_INTERVAL of T73 : [143, 145] 
-	LIVE_INTERVAL of T74 : [147, 148] 
-	LIVE_INTERVAL of T75 : [150, 151] 
-	LIVE_INTERVAL of T76 : [152, 189] 
-	LIVE_INTERVAL of T77 : [153, 188] 
-	LIVE_INTERVAL of T78 : [154, 188] 
-	LIVE_INTERVAL of T79 : [158, 160] 
-	LIVE_INTERVAL of T80 : [160, 161] 
-	LIVE_INTERVAL of T81 : [161, 168] 
-	LIVE_INTERVAL of T82 : [163, 165] 
-	LIVE_INTERVAL of T83 : [165, 166] 
-	LIVE_INTERVAL of T84 : [166, 168] 
-	LIVE_INTERVAL of T85 : [168, 174] 
-	LIVE_INTERVAL of T86 : [169, 171] 
-	LIVE_INTERVAL of T87 : [171, 172] 
-	LIVE_INTERVAL of T88 : [172, 174] 
-	LIVE_INTERVAL of T89 : [174, 175] 
-	LIVE_INTERVAL of T90 : [175, 190] 
-	LIVE_INTERVAL of T91 : [178, 179] 
-	LIVE_INTERVAL of T92 : [182, 183] 
-	LIVE_INTERVAL of T93 : [186, 187] 
-	LIVE_INTERVAL of T94 : [190, 192] 
-	LIVE_INTERVAL of T95 : [194, 195] 
-	LIVE_INTERVAL of T96 : [197, 198] 
-	LIVE_INTERVAL of T97 : [199, 236] 
-	LIVE_INTERVAL of T98 : [200, 235] 
-	LIVE_INTERVAL of T99 : [201, 235] 
-	LIVE_INTERVAL of T100 : [205, 207] 
-	LIVE_INTERVAL of T101 : [207, 208] 
-	LIVE_INTERVAL of T102 : [208, 215] 
-	LIVE_INTERVAL of T103 : [210, 212] 
-	LIVE_INTERVAL of T104 : [212, 213] 
-	LIVE_INTERVAL of T105 : [213, 215] 
-	LIVE_INTERVAL of T106 : [215, 221] 
-	LIVE_INTERVAL of T107 : [216, 218] 
-	LIVE_INTERVAL of T108 : [218, 219] 
-	LIVE_INTERVAL of T109 : [219, 221] 
-	LIVE_INTERVAL of T110 : [221, 222] 
-	LIVE_INTERVAL of T111 : [222, 237] 
-	LIVE_INTERVAL of T112 : [225, 226] 
-	LIVE_INTERVAL of T113 : [229, 230] 
-	LIVE_INTERVAL of T114 : [233, 234] 
-	LIVE_INTERVAL of T115 : [237, 239] 
-	LIVE_INTERVAL of T116 : [241, 242] 
-	LIVE_INTERVAL of T117 : [244, 245] 
+	LIVE_INTERVAL of T3 : [0, 2] 
+	LIVE_INTERVAL of T4 : [1, 2] 
+	LIVE_INTERVAL of T5 : [3, 6] 
+	LIVE_INTERVAL of T6 : [5, 6] 
+	LIVE_INTERVAL of T7 : [7, 10] 
+	LIVE_INTERVAL of T8 : [9, 10] 
+	LIVE_INTERVAL of T9 : [11, 14] 
+	LIVE_INTERVAL of T10 : [13, 14] 
+	LIVE_INTERVAL of T11 : [15, 18] 
+	LIVE_INTERVAL of T12 : [17, 18] 
+	LIVE_INTERVAL of T13 : [19, 21] 
+	LIVE_INTERVAL of T14 : [20, 21] 
+	LIVE_INTERVAL of T15 : [22, 25] 
+	LIVE_INTERVAL of T16 : [24, 25] 
+	LIVE_INTERVAL of T17 : [26, 29] 
+	LIVE_INTERVAL of T18 : [28, 29] 
+	LIVE_INTERVAL of T19 : [30, 33] 
+	LIVE_INTERVAL of T20 : [32, 33] 
+	LIVE_INTERVAL of T21 : [34, 37] 
+	LIVE_INTERVAL of T22 : [36, 37] 
+	LIVE_INTERVAL of T23 : [38, 41] 
+	LIVE_INTERVAL of T24 : [40, 41] 
+	LIVE_INTERVAL of T25 : [42, 45] 
+	LIVE_INTERVAL of T26 : [44, 45] 
+	LIVE_INTERVAL of T27 : [46, 49] 
+	LIVE_INTERVAL of T28 : [48, 49] 
+	LIVE_INTERVAL of T29 : [50, 75] 
+	LIVE_INTERVAL of T30 : [51, 74] 
+	LIVE_INTERVAL of T31 : [54, 56] 
+	LIVE_INTERVAL of T32 : [56, 57] 
+	LIVE_INTERVAL of T33 : [57, 64] 
+	LIVE_INTERVAL of T34 : [59, 61] 
+	LIVE_INTERVAL of T35 : [61, 62] 
+	LIVE_INTERVAL of T36 : [62, 64] 
+	LIVE_INTERVAL of T37 : [64, 65] 
+	LIVE_INTERVAL of T38 : [65, 76] 
+	LIVE_INTERVAL of T39 : [68, 69] 
+	LIVE_INTERVAL of T40 : [72, 73] 
+	LIVE_INTERVAL of T41 : [76, 78] 
+	LIVE_INTERVAL of T42 : [80, 81] 
+	LIVE_INTERVAL of T43 : [83, 84] 
 -------------------------
 BINDINGS : 
 VAR T0 will be assigned to register R0 
 VAR T1 will be assigned to register R0 
 VAR T2 will be assigned to register R0 
-VAR T3 will be assigned to register R0 
-VAR T4 will be assigned to register R0 
+VAR T3 will be assigned to register R1 
+VAR T4 will be assigned to register R2 
 VAR T5 will be assigned to register R1 
 VAR T6 will be assigned to register R2 
 VAR T7 will be assigned to register R1 
@@ -153,92 +81,18 @@ VAR T27 will be assigned to register R1
 VAR T28 will be assigned to register R2 
 VAR T29 will be assigned to register R1 
 VAR T30 will be assigned to register R2 
-VAR T31 will be assigned to register R1 
-VAR T32 will be assigned to register R2 
-VAR T33 will be assigned to register R1 
-VAR T34 will be assigned to register R2 
-VAR T35 will be assigned to register R3 
-VAR T36 will be assigned to register R2 
-VAR T37 will be assigned to register R3 
-VAR T38 will be assigned to register R4 
-VAR T39 will be assigned to register R3 
-VAR T40 will be assigned to register R4 
-VAR T41 will be assigned to register R2 
-VAR T42 will be assigned to register R4 
+VAR T31 will be assigned to register R3 
+VAR T32 will be assigned to register R4 
+VAR T33 will be assigned to register R3 
+VAR T34 will be assigned to register R4 
+VAR T35 will be assigned to register R5 
+VAR T36 will be assigned to register R4 
+VAR T37 will be assigned to register R5 
+VAR T38 will be assigned to register R3 
+VAR T39 will be assigned to register R5 
+VAR T40 will be assigned to register R5 
+VAR T41 will be assigned to register R1 
+VAR T42 will be assigned to register R1 
 VAR T43 will be assigned to register R1 
-VAR T44 will be assigned to register R1 
-VAR T45 will be assigned to register R1 
-VAR T46 will be assigned to register R1 
-VAR T47 will be assigned to register R2 
-VAR T48 will be assigned to register R4 
-VAR T49 will be assigned to register R3 
-VAR T50 will be assigned to register R4 
-VAR T51 will be assigned to register R3 
-VAR T52 will be assigned to register R5 
-VAR T53 will be assigned to register R3 
-VAR T54 will be assigned to register R5 
-VAR T55 will be assigned to register R4 
-VAR T56 will be assigned to register R5 
-VAR T57 will be assigned to register R5 
-VAR T58 will be assigned to register R1 
-VAR T59 will be assigned to register R1 
-VAR T60 will be assigned to register R1 
-VAR T61 will be assigned to register R1 
-VAR T62 will be assigned to register R4 
-VAR T63 will be assigned to register R2 
-VAR T64 will be assigned to register R5 
-VAR T65 will be assigned to register R2 
-VAR T66 will be assigned to register R5 
-VAR T67 will be assigned to register R3 
-VAR T68 will be assigned to register R5 
-VAR T69 will be assigned to register R3 
-VAR T70 will be assigned to register R2 
-VAR T71 will be assigned to register R3 
-VAR T72 will be assigned to register R3 
-VAR T73 will be assigned to register R1 
-VAR T74 will be assigned to register R1 
-VAR T75 will be assigned to register R1 
-VAR T76 will be assigned to register R1 
-VAR T77 will be assigned to register R2 
-VAR T78 will be assigned to register R4 
-VAR T79 will be assigned to register R3 
-VAR T80 will be assigned to register R5 
-VAR T81 will be assigned to register R3 
-VAR T82 will be assigned to register R5 
-VAR T83 will be assigned to register R6 
-VAR T84 will be assigned to register R5 
-VAR T85 will be assigned to register R6 
-VAR T86 will be assigned to register R3 
-VAR T87 will be assigned to register R5 
-VAR T88 will be assigned to register R3 
-VAR T89 will be assigned to register R5 
-VAR T90 will be assigned to register R6 
-VAR T91 will be assigned to register R5 
-VAR T92 will be assigned to register R5 
-VAR T93 will be assigned to register R5 
-VAR T94 will be assigned to register R1 
-VAR T95 will be assigned to register R1 
-VAR T96 will be assigned to register R1 
-VAR T97 will be assigned to register R1 
-VAR T98 will be assigned to register R6 
-VAR T99 will be assigned to register R2 
-VAR T100 will be assigned to register R4 
-VAR T101 will be assigned to register R5 
-VAR T102 will be assigned to register R4 
-VAR T103 will be assigned to register R5 
-VAR T104 will be assigned to register R3 
-VAR T105 will be assigned to register R5 
-VAR T106 will be assigned to register R3 
-VAR T107 will be assigned to register R4 
-VAR T108 will be assigned to register R5 
-VAR T109 will be assigned to register R4 
-VAR T110 will be assigned to register R5 
-VAR T111 will be assigned to register R3 
-VAR T112 will be assigned to register R5 
-VAR T113 will be assigned to register R5 
-VAR T114 will be assigned to register R5 
-VAR T115 will be assigned to register R1 
-VAR T116 will be assigned to register R1 
-VAR T117 will be assigned to register R1 
 *************************
 
