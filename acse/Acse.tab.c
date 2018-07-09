@@ -625,9 +625,9 @@ static const yytype_uint16 yyrline[] =
      230,   239,   248,   261,   262,   266,   267,   272,   273,   274,
      275,   278,   279,   280,   281,   284,   285,   288,   305,   337,
      343,   342,   362,   368,   361,   382,   391,   381,   418,   417,
-     439,   446,   466,   485,   486,   517,   539,   539,   610,   615,
-     637,   640,   643,   646,   649,   652,   655,   658,   661,   664,
-     667,   670,   673,   674,   675,   676,   677,   678
+     439,   446,   466,   485,   486,   512,   534,   534,   605,   610,
+     632,   635,   638,   641,   644,   647,   650,   653,   656,   659,
+     662,   665,   668,   669,   670,   671,   672,   673
 };
 #endif
 
@@ -2083,28 +2083,23 @@ yyreduce:
 #line 486 "Acse.y"
     {
                      int location = 0;
-   
+                     fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
                      /* get the location of the symbol with the given ID */
                      /* instead of location = get_symbol_location(program, $1, 0); */
+                     int override = 0;
+                     for (int i=0; i<exists_size-1; i++) {
 
+                        if(!strcmp(exists[i].id, (yyvsp[(1) - (1)].svalue))){
+                          location = exists[i].index_reg;
+                          fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, (yyvsp[(1) - (1)].svalue) );
+                          override = 1;
+                        }
+                     }
 
-                     fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
-
-                      int override = 0;
-
-                      for (int i=0; i<exists_size-1; i++) {
-
-                        fprintf(stdout, "quantifier %s is being compared to variable %s \n", exists[i].id, (yyvsp[(1) - (1)].svalue));
-                         if (!override){
-                           if (strcmp(exists[i].id, (yyvsp[(1) - (1)].svalue))){
-                              location = get_symbol_location(program, (yyvsp[(1) - (1)].svalue), 0);
-                           } else {
-                              location = exists[i].index_reg;
-                              fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, (yyvsp[(1) - (1)].svalue) );
-                              override = 1;
-                           }
-                         }
-                      }
+                     if(!override){
+                        printf("no quantifier found to replace, searching for a previously defined variable\n");
+                        location = get_symbol_location(program, (yyvsp[(1) - (1)].svalue), 0);
+                     }
                      
                      fprintf(stdout, "returned register location is %d \n", location);
 
@@ -2115,7 +2110,7 @@ yyreduce:
     break;
 
   case 45:
-#line 517 "Acse.y"
+#line 512 "Acse.y"
     {
 
                      int reg;
@@ -2139,7 +2134,7 @@ yyreduce:
     break;
 
   case 46:
-#line 539 "Acse.y"
+#line 534 "Acse.y"
     {
 
      int q_list_len = getLength((yyvsp[(2) - (2)].list));
@@ -2172,7 +2167,7 @@ yyreduce:
     break;
 
   case 47:
-#line 568 "Acse.y"
+#line 563 "Acse.y"
     {
 
       //label to jump back to until satisfaction or exaustion of all combinations
@@ -2217,7 +2212,7 @@ yyreduce:
     break;
 
   case 48:
-#line 610 "Acse.y"
+#line 605 "Acse.y"
     {  if ((yyvsp[(2) - (2)].intval) == 0)
                            (yyval.expr) = create_expression (1, IMMEDIATE);
                         else
@@ -2226,7 +2221,7 @@ yyreduce:
     break;
 
   case 49:
-#line 615 "Acse.y"
+#line 610 "Acse.y"
     {
                            int identifier_location;
                            int output_register;
@@ -2252,116 +2247,116 @@ yyreduce:
     break;
 
   case 50:
-#line 637 "Acse.y"
+#line 632 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ANDB);
    ;}
     break;
 
   case 51:
-#line 640 "Acse.y"
+#line 635 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ORB);
    ;}
     break;
 
   case 52:
-#line 643 "Acse.y"
+#line 638 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ADD);
    ;}
     break;
 
   case 53:
-#line 646 "Acse.y"
+#line 641 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SUB);
    ;}
     break;
 
   case 54:
-#line 649 "Acse.y"
+#line 644 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), MUL);
    ;}
     break;
 
   case 55:
-#line 652 "Acse.y"
+#line 647 "Acse.y"
     {
                            (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), DIV);
    ;}
     break;
 
   case 56:
-#line 655 "Acse.y"
+#line 650 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _LT_);
    ;}
     break;
 
   case 57:
-#line 658 "Acse.y"
+#line 653 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _GT_);
    ;}
     break;
 
   case 58:
-#line 661 "Acse.y"
+#line 656 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _EQ_);
    ;}
     break;
 
   case 59:
-#line 664 "Acse.y"
+#line 659 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _NOTEQ_);
    ;}
     break;
 
   case 60:
-#line 667 "Acse.y"
+#line 662 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _LTEQ_);
    ;}
     break;
 
   case 61:
-#line 670 "Acse.y"
+#line 665 "Acse.y"
     {
                         (yyval.expr) = handle_binary_comparison (program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), _GTEQ_);
    ;}
     break;
 
   case 62:
-#line 673 "Acse.y"
+#line 668 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SHL); ;}
     break;
 
   case 63:
-#line 674 "Acse.y"
+#line 669 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), SHR); ;}
     break;
 
   case 64:
-#line 675 "Acse.y"
+#line 670 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ANDL); ;}
     break;
 
   case 65:
-#line 676 "Acse.y"
+#line 671 "Acse.y"
     {  (yyval.expr) = handle_bin_numeric_op(program, (yyvsp[(1) - (3)].expr), (yyvsp[(3) - (3)].expr), ORL); ;}
     break;
 
   case 66:
-#line 677 "Acse.y"
+#line 672 "Acse.y"
     { (yyval.expr) = (yyvsp[(2) - (3)].expr); ;}
     break;
 
   case 67:
-#line 678 "Acse.y"
+#line 673 "Acse.y"
     {
                         if ((yyvsp[(2) - (2)].expr).expression_type == IMMEDIATE)
                         {
@@ -2384,7 +2379,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2388 "Acse.tab.c"
+#line 2383 "Acse.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2598,7 +2593,7 @@ yyreturn:
 }
 
 
-#line 698 "Acse.y"
+#line 693 "Acse.y"
 
 /*=========================================================================
                                   MAIN
@@ -2696,4 +2691,3 @@ int yyerror(const char* errmsg)
    
    return 0;
 }
-

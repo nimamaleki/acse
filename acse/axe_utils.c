@@ -28,6 +28,8 @@ extern t_io_infos *file_infos;
 
 static void free_new_variables(t_list *variables)
 {
+
+   printf("in the function\n");
    t_list *current_element;
    t_axe_declaration *current_decl;
 

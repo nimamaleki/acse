@@ -485,28 +485,23 @@ write_statement : WRITE LPAR exp RPAR
 exp: NUMBER      { $$ = create_expression ($1, IMMEDIATE); }
    | IDENTIFIER  {
                      int location = 0;
-   
+                     fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
                      /* get the location of the symbol with the given ID */
                      /* instead of location = get_symbol_location(program, $1, 0); */
+                     int override = 0;
+                     for (int i=0; i<exists_size-1; i++) {
 
+                        if(!strcmp(exists[i].id, $1)){
+                          location = exists[i].index_reg;
+                          fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
+                          override = 1;
+                        }
+                     }
 
-                     fprintf(stdout, "We have seen %d existential quantifiers \n", exists_size-1);
-
-                      int override = 0;
-
-                      for (int i=0; i<exists_size-1; i++) {
-
-                        fprintf(stdout, "quantifier %s is being compared to variable %s \n", exists[i].id, $1);
-                         if (!override){
-                           if (strcmp(exists[i].id, $1)){
-                              location = get_symbol_location(program, $1, 0);
-                           } else {
-                              location = exists[i].index_reg;
-                              fprintf(stdout, "quantifier %s has overridden the variable %s value \n", exists[i].id, $1 );
-                              override = 1;
-                           }
-                         }
-                      }
+                     if(!override){
+                        printf("no quantifier found to replace, searching for a previously defined variable\n");
+                        location = get_symbol_location(program, $1, 0);
+                     }
                      
                      fprintf(stdout, "returned register location is %d \n", location);
 
